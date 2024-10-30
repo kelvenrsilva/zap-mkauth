@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>zapNOC</title>
+  </head>
+  <body>
+    
+    <section class="u-align-center u-clearfix u-palette-3-light-2 u-section-2" id="app">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <div id="app">
+          <img src="" alt="QR Code" id="qrcode">
+          <h3>Logs de Conexão:</h3>
+          <p class="logs"></p>
+    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="zdg.js" defer=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js" crossorigin="anonymous"></script>
+    <script>
+      $(document).ready(function() {
+        var socket = io();
+  
+        socket.on('message', function(msg) {
+          $('.logs').append($('<li>').text(msg));
+        });
+  
+        socket.on('qr', function(src) {
+          $('#qrcode').attr('src', src);
+          $('#qrcode').show();
+        });
+  
+        socket.on('ready', function(data) {
+          $('#qrcode').hide();
+        });
+  
+        socket.on('authenticated', function(data) {
+          $('#qrcode').hide();
+        });
+      });
+    </script>
+  </body>
+</html>
